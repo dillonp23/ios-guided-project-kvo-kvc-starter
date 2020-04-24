@@ -10,8 +10,8 @@
 #import "LSIStopWatch.h"
 
 
-// TODO: Create a KVOContext to identify the StopWatch observer
-
+// MARK: - Create a KVOContext to identify the StopWatch observer
+void *KVOContext = &KVOContext; // unique address to this pointer
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -57,7 +57,8 @@
 }
 
 
-- (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
+- (NSString *)stringFromTimeInterval:(NSTimeInterval)interval
+{
     NSInteger timeIntervalAsInt = (NSInteger)interval;
     NSInteger tenths = (NSInteger)((interval - floor(interval)) * 10);
     NSInteger seconds = timeIntervalAsInt % 60;
@@ -66,7 +67,9 @@
     return [NSString stringWithFormat:@"%02ld:%02ld:%02ld.%ld", (long)hours, (long)minutes, (long)seconds, (long)tenths];
 }
 
-- (void)setStopwatch:(LSIStopWatch *)stopwatch {
+// Typical example of a custom setter - since we're in setter we use the instance variable
+- (void)setStopwatch:(LSIStopWatch *)stopwatch
+{
     
     if (stopwatch != _stopwatch) {
         
@@ -76,13 +79,41 @@
         _stopwatch = stopwatch;
         
         // didSet
-		// TODO: Setup KVO - Add Observers
+		// Setup KVO - Add Observers
+        [_stopwatch addObserver:self
+                     forKeyPath:@"running"
+                        options:0
+                        context:KVOContext];
+        [_stopwatch addObserver:self
+                     forKeyPath:@"elapsedTime"
+                        options:0
+                        context:KVOContext];
     }
     
 }
 
 
 // TODO: Review docs and implement observerValueForKeyPath
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context
+{
+    if (context == KVOContext) {
+        if ([keyPath isEqualToString:@"running"]) {
+            NSLog(@"Update the UI! Running %@", (self.stopwatch.running ? @"YES" : @"NO"));
+            [self updateViews];
+        } else if ([keyPath isEqualToString:@"elapsedTime"]) {
+            NSLog(@"Update the UI! Elapsed Time: %.2fs", self.stopwatch.elapsedTime);
+            [self updateViews];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath
+                             ofObject:object
+                               change:change
+                              context:context];
+    }
+}
 
 
 - (void)dealloc {
