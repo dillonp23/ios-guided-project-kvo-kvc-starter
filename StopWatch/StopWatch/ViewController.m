@@ -81,8 +81,10 @@ void *KVOContext = &KVOContext; // unique address to this pointer
         [_stopwatch removeObserver:self forKeyPath:@"elapsedTime" context:KVOContext];
 //        }
         
-
-        _stopwatch = stopwatch;
+        [self willChangeValueForKey:@"stopwatch"];
+        _stopwatch = stopwatch; // By using these two methods our property becomes totally KVO compliant
+        [self didChangeValueForKey:@"stopwatch"];
+        
         
         // didSet
 		// Setup KVO - Add Observers
