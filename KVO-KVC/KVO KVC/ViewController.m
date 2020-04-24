@@ -115,7 +115,17 @@
     [engineering setValue:@"John" forKeyPath:@"manager.name"]; // when using multiple propertie sneed to use for key path
     NSLog(@"%@", engineering.manager.name);
     
+    NSSortDescriptor *nameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+    NSSortDescriptor *salarySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"salary" ascending:YES];
     
+    NSArray *sortedEmployees = [employees sortedArrayUsingDescriptors:@[nameSortDescriptor,
+                                                                        salarySortDescriptor]];
+    NSLog(@"Sorted employess: %@", sortedEmployees);
+    
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"John"]; // predcate ~ a filter
+    NSArray *filteredEmployees = [employees filteredArrayUsingPredicate:predicate];
+    NSLog(@"Filtered employees: %@", filteredEmployees);
 }
 
 
