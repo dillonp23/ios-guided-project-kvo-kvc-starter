@@ -70,19 +70,48 @@
 //    NSString *name = craig.name;
 //    NSLog(@"%@", name);
     
-    NSString *key = @"privateName";
-    NSString *value = [craig valueForKey:key];
-    NSLog(@"Value for key %@ is: %@", key, value);
-    
-    [philSchiller setValue:@"Killer Schiller" forKey:key];
-    NSString *value2 = [philSchiller valueForKey:key];
-    NSLog(@"Value for key %@ is: %@", key, value2);
-    
+//    NSString *key = @"privateName";
+//    NSString *value = [craig valueForKey:key];
+//    NSLog(@"Value for key %@ is: %@", key, value);
+//
+//    [philSchiller setValue:@"Killer Schiller" forKey:key];
+//    NSString *value2 = [philSchiller valueForKey:key];
+//    NSLog(@"Value for key %@ is: %@", key, value2);
+//
 //    for (id employee in engineering.employees) {
 //        NSString *value = [employee valueForKey:key];
 //        NSLog(@"Value for key %@ is: %@", key, value);
 //    }
     
+    //    NSArray *employeesAlt = [self.hrController valueForKeyPath:@"departments.employees"];
+    //    NSLog(@"Employees are %@", employeesAlt);
+    
+    NSString *key = @"salary";
+    
+    NSArray *employees = [self.hrController valueForKeyPath:@"departments.@distinctUnionOfArrays.employees"]; // distinct union will flatten multiple arrays of employees
+    NSLog(@"Employees are %@", employees);
+    NSArray *salaries = [employees valueForKeyPath:key];
+    NSLog(@"Employees salaries are %@", salaries);
+    
+//    @try {
+//        NSArray *directSalaries = [self.hrController valueForKeyPath:@"departments.@distinctUnionOfArrays.employees.salary"];
+//        NSLog(@"Employees salaries are %@", directSalaries);
+//    } @catch (NSException *exception) {
+//        NSLog(@"Got an exception: %@", exception);
+//    }
+    
+    
+    
+    [craig setValue:@(42 + 5) forKey:key];
+    
+    NSArray *directSalaries = [self.hrController valueForKeyPath:@"departments.@distinctUnionOfArrays.employees.salary"];
+    NSLog(@"Employees salaries are %@", directSalaries);
+    
+    NSLog(@"Avg Salary: %@", [employees valueForKeyPath:@"@avg.salary"]);
+    NSLog(@"Max Salary: %@", [employees valueForKeyPath:@"@max.salary"]);
+    NSLog(@"Min Salary: %@", [employees valueForKeyPath:@"@min.salary"]);
+    NSLog(@"Number of Salaries: %@", [employees valueForKeyPath:@"@count.salary"]);
+
     
     
 }
