@@ -74,7 +74,13 @@ void *KVOContext = &KVOContext; // unique address to this pointer
     if (stopwatch != _stopwatch) {
         
         // willSet
-		// TODO: Cleanup KVO - Remove Observers
+		// Cleanup KVO - Remove Observers
+        // If statement is unecessary because if _stopwatch is nil, then calling the method will do nothing
+//        if (_stopwatch) {
+        [_stopwatch removeObserver:self forKeyPath:@"runnning" context:KVOContext];
+        [_stopwatch removeObserver:self forKeyPath:@"elapsedTime" context:KVOContext];
+//        }
+        
 
         _stopwatch = stopwatch;
         
@@ -93,7 +99,7 @@ void *KVOContext = &KVOContext; // unique address to this pointer
 }
 
 
-// TODO: Review docs and implement observerValueForKeyPath
+// Review docs and implement observerValueForKeyPath
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
@@ -116,9 +122,11 @@ void *KVOContext = &KVOContext; // unique address to this pointer
 }
 
 
-- (void)dealloc {
-	// TODO: Stop observing KVO (otherwise it will crash randomly)
-    
+- (void)dealloc
+{
+	// Stop observing KVO (otherwise it will crash randomly when VC is no longer onscreen)
+    // Dealloc = Where the memory is cleaned up
+    self.stopwatch = nil; // removing old observers but not adding any new ones...
 }
 
 @end
