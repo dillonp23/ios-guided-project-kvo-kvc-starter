@@ -112,6 +112,8 @@
     NSLog(@"Min Salary: %@", [employees valueForKeyPath:@"@min.salary"]);
     NSLog(@"Number of Salaries: %@", [employees valueForKeyPath:@"@count.salary"]);
 
+    [engineering setValue:@"John" forKeyPath:@"manager.name"]; // when using multiple propertie sneed to use for key path
+    NSLog(@"%@", engineering.manager.name);
     
     
 }
