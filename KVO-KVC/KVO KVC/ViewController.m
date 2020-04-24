@@ -26,7 +26,7 @@
 
     LSIDepartment *marketing = [[LSIDepartment alloc] init];
     marketing.name = @"Marketing";
-    LSIEmployee * philSchiller = [[LSIEmployee alloc] init];
+    LSIEmployee *philSchiller = [[LSIEmployee alloc] init];
     philSchiller.name = @"Phil";
     philSchiller.jobTitle = @"VP of Marketing";
     philSchiller.salary = 10000000; 
@@ -74,10 +74,16 @@
     NSString *value = [craig valueForKey:key];
     NSLog(@"Value for key %@ is: %@", key, value);
     
+    [philSchiller setValue:@"Killer Schiller" forKey:key];
+    NSString *value2 = [philSchiller valueForKey:key];
+    NSLog(@"Value for key %@ is: %@", key, value2);
+    
 //    for (id employee in engineering.employees) {
 //        NSString *value = [employee valueForKey:key];
 //        NSLog(@"Value for key %@ is: %@", key, value);
 //    }
+    
+    
     
 }
 
