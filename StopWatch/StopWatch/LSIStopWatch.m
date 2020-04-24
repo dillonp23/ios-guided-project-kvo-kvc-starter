@@ -52,8 +52,11 @@
 - (void)updateTimer:(NSTimer *)timer; {
 	// If you pause/start the timer it will keep track of the original
 	// time so it doesn't start from 0 each time
-	
+    
+    // if you cant say "self." (for wahetever reason) then you must wrap property with these two KVO compliant lines of code
+    //    [self willChangeValueForKey:@"elapsedTime"];
     self.elapsedTime = [[NSDate date] timeIntervalSinceDate:self.startDate] + self.previouslyAccumulatedTime;
+    //    [self didChangeValueForKey:@"elapsedTime"];
 }
 
 
