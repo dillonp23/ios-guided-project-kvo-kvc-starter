@@ -65,9 +65,19 @@
     [controller addDepartment:marketing];
     self.hrController = controller;
     
-    NSLog(@"%@", self.hrController);
+//    NSLog(@"%@", self.hrController);
     
+//    NSString *name = craig.name;
+//    NSLog(@"%@", name);
     
+    NSString *key = @"name";
+    NSString *value = [craig valueForKey:key];
+    NSLog(@"Value for key %@ is: %@", key, value);
+    
+    for (id employee in engineering.employees) {
+        NSString *value = [employee valueForKey:key];
+        NSLog(@"Value for key %@ is: %@", key, value);
+    }
 }
 
 
