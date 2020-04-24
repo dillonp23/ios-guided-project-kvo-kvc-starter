@@ -70,14 +70,15 @@
 //    NSString *name = craig.name;
 //    NSLog(@"%@", name);
     
-    NSString *key = @"name";
+    NSString *key = @"privateName";
     NSString *value = [craig valueForKey:key];
     NSLog(@"Value for key %@ is: %@", key, value);
     
-    for (id employee in engineering.employees) {
-        NSString *value = [employee valueForKey:key];
-        NSLog(@"Value for key %@ is: %@", key, value);
-    }
+//    for (id employee in engineering.employees) {
+//        NSString *value = [employee valueForKey:key];
+//        NSLog(@"Value for key %@ is: %@", key, value);
+//    }
+    
 }
 
 
