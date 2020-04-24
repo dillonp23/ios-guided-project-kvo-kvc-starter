@@ -113,6 +113,7 @@
     NSLog(@"Number of Salaries: %@", [employees valueForKeyPath:@"@count.salary"]);
 
     [engineering setValue:@"John" forKeyPath:@"manager.name"]; // when using multiple propertie sneed to use for key path
+    [marketing setValue:@"John" forKeyPath:@"manager.name"];
     NSLog(@"%@", engineering.manager.name);
     
     NSSortDescriptor *nameSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
@@ -126,6 +127,9 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"John"]; // predcate ~ a filter
     NSArray *filteredEmployees = [employees filteredArrayUsingPredicate:predicate];
     NSLog(@"Filtered employees: %@", filteredEmployees);
+    
+    NSArray *managers = [self.hrController valueForKeyPath:@"departments.manager.jobTitle"];
+    NSLog(@"%@", managers);
 }
 
 
